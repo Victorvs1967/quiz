@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Функция начала тестирования
     const playTest = () => {
-        const finalAnswers = {};
+        const finalAnswers = [];
         // переменная с номеров вопроса
         let numberQuestion = 0;
         modalTitle.textContent = 'Ответьте на вопрос';
