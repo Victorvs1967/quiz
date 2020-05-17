@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnOpenModal.addEventListener('click', () => {
         interval = requestAnimationFrame(animateModal);
         modalBlock.classList.add('d-block');
+        prevBtn.classList.add('d-none');
         playTest();
     });
 
@@ -165,9 +166,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Функция начала тестирования
     const playTest = () => {
-        const finalAnswers = [];
+        const finalAnswers = {};
         // переменная с номеров вопроса
         let numberQuestion = 0;
+        modalTitle.textContent = 'Ответьте на вопрос';
         // Вывод массива сответами
         const renderAnsewrs = (index) => {
             questions[index].answers.forEach((answer) => {
@@ -188,44 +190,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderQuestion = (indexNumber) => {
             formAnswers.innerHTML = '';
 
-            switch (true) {
-                case (numberQuestion >= 0 && numberQuestion <= questions.length - 1): {
-                    questionTitle.textContent = `${questions[indexNumber].question}`;
-                    renderAnsewrs(indexNumber);    
-                    nextBtn.classList.remove('d-none');
-                    prevBtn.classList.remove('d-none');
-                    sendBtn.classList.add('d-none');
-                    break;
-                }
-                case (numberQuestion === 0): {
-                    prevBtn.classList.add('d-none');
-                    break;
-                }
-                case (numberQuestion === questions.length): {
-                    questionTitle.textContent = ``;
-                    nextBtn.classList.add('d-none');
-                    prevBtn.classList.add('d-none');
-                    sendBtn.classList.remove('d-none');
-                    formAnswers.innerHTML = `
-                    <div class="form-group">
-                        <label for="numberPhone">Введите номер телефона</label>
-                        <input type="phone" class="form-control" id="numberPhone">
-                    </div>            
-                    `;
-                    break;
-                }
-                case (numberQuestion === questions.length + 1): {
-                    modalTitle.classList.add('d-none');
-                    sendBtn.classList.add('d-none');
-                    closeModal.classList.add('d-none');
-                    formAnswers.textContent = 'Спасибо!';
-                    setTimeout(() => {
-                        modalBlock.classList.remove('d-block');
-                    }, 2000);
-                    break;
-                }
-                default:
-                    break;
+            if (numberQuestion >= 0 && numberQuestion <= questions.length - 1) {
+                questionTitle.textContent = `${questions[indexNumber].question}`;
+                renderAnsewrs(indexNumber);    
+                nextBtn.classList.remove('d-none');
+                prevBtn.classList.remove('d-none');
+                sendBtn.classList.add('d-none');
+            }
+            if (numberQuestion === 0) {
+                prevBtn.classList.add('d-none');
+            }
+            if (numberQuestion === questions.length) {
+                modalTitle.textContent = '';
+                questionTitle.textContent = ``;
+                nextBtn.classList.add('d-none');
+                prevBtn.classList.add('d-none');
+                sendBtn.classList.remove('d-none');
+                formAnswers.innerHTML = `
+                <div class="form-group">
+                    <label for="numberPhone">Введите номер телефона</label>
+                    <input type="phone" class="form-control" id="numberPhone">
+                </div>            
+                `;
+
+                const numberPhone = document.getElementById('numberPhone');
+                numberPhone.addEventListener('input', (event) => {
+                    event.target.value = event.target.value.replace(/[^0-9+-]/, ``);
+                });
+            }
+            if (numberQuestion === questions.length + 1) {
+                modalTitle.textContent = '';
+                sendBtn.classList.add('d-none');
+                closeModal.classList.add('d-none');
+                formAnswers.textContent = 'Спасибо!';
+                setTimeout(() => {
+                    modalBlock.classList.remove('d-block');
+                }, 2000);
             }
         };
         // Запуск рендера вопросов
@@ -260,6 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             checkAnswer();
             numberQuestion++;
             renderQuestion(numberQuestion);
+            console.log(finalAnswers);
         };
     };
 });
