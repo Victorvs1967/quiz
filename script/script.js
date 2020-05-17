@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Функция начала тестирования
     const playTest = () => {
         const finalAnswers = [];
+        const obj = {};
         // переменная с номеров вопроса
         let numberQuestion = 0;
         modalTitle.textContent = 'Ответьте на вопрос';
@@ -222,7 +223,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalTitle.textContent = '';
                 sendBtn.classList.add('d-none');
                 closeModal.classList.add('d-none');
-                formAnswers.textContent = 'Спасибо!';
+                formAnswers.textContent = 'Спасибо за тест!';
+
+                for (let key in obj) {
+                    let newObj = {};
+                    newObj[key] = obj[key];
+                    finalAnswers.push(newObj);
+                }
+
                 setTimeout(() => {
                     modalBlock.classList.remove('d-block');
                 }, 2000);
@@ -233,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const checkAnswer = () => {
 
-            const obj = {};
             const inputs = [...formAnswers.elements].filter((input) => input.checked || input.id === 'numberPhone');
             inputs.forEach((input, index) => {
                 if (numberQuestion >= 0 && numberQuestion <= questions.length - 1) {
@@ -243,7 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     obj[`Номер телефона`] = input.value;
                 }
             });
-            finalAnswers.push(obj);
         };
 
         // Обработчики событий кнопок выбора следующих вопросов
@@ -260,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
             checkAnswer();
             numberQuestion++;
             renderQuestion(numberQuestion);
-            console.log(finalAnswers);
         };
     };
 });
