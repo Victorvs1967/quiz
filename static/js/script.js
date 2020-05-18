@@ -14,14 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn = document.getElementById('next'),
         sendBtn = document.getElementById('send'),
         modalDialog = document.querySelector('.modal-dialog');
+
     // получение данных
     const getData = () => {
         formAnswers.textContent = 'LOAD...';
-
         setTimeout(() => {
             fetch('./data/questions.json')
             .then(res => res.json())
-            .then(obj => playTest(obj.questions));                
+            .then(obj => playTest(obj.questions))
+            .catch(err => {
+                formAnswers.textContent = 'Щшибка загрузки данных';
+                console.error(err);
+            })               
         }, 1000);    
 
     };
@@ -72,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     burgerBtn.addEventListener('click', () => {
+        interval = requestAnimationFrame(animateModal);
         burgerBtn.classList.add('active');
         modalBlock.classList.add('d-block');
         getData();
