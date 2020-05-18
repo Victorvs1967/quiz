@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             fetch('./data/questions.json')
             .then(res => res.json())
-            .then(obj => playTest(obj['questions']));                
+            .then(obj => playTest(obj.questions));                
         }, 1000);    
 
     };
