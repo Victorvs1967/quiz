@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     burgerBtn.addEventListener('click', () => {
         burgerBtn.classList.add('active');
         modalBlock.classList.add('d-block');
-        playTest();
+        getData();
     });
 
     document.addEventListener('click' , (event) => {
