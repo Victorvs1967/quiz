@@ -19,11 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
         formAnswers.textContent = 'LOAD...';
 
         fetch('http://127.0.0.1:8000/data/questions.json')
-        .then(res => console.log(res));
-
-        setTimeout(() => {
-            playTest();
-        }, 2000);
+        .then(res => res.json())
+        .then(obj => {
+            setTimeout(() => {
+                playTest(obj['questions']);
+            }, 2000);    
+        });
     };
                         
     let clientWidth = document.documentElement.clientHeight;
@@ -88,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     // Функция начала тестирования
-    const playTest = () => {
+    const playTest = (questions) => {
         const finalAnswers = [];
         const obj = {};
         // переменная с номеров вопроса
