@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formAnswers.textContent = 'LOAD...';
 
         setTimeout(() => {
-            fetch('http://127.0.0.1:8000/data/questions.json')
+            fetch('http://localhost:8000/data/questions.json')
             .then(res => res.json())
             .then(obj => playTest(obj['questions']));                
         }, 1000);    
