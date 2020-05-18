@@ -18,13 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const getData = () => {
         formAnswers.textContent = 'LOAD...';
 
-        fetch('http://127.0.0.1:8000/data/questions.json')
-        .then(res => res.json())
-        .then(obj => {
-            setTimeout(() => {
-                playTest(obj['questions']);
-            }, 2000);    
-        });
+        setTimeout(() => {
+            fetch('http://127.0.0.1:8000/data/questions.json')
+            .then(res => res.json())
+            .then(obj => playTest(obj['questions']));                
+        }, 1000);    
+
     };
                         
     let clientWidth = document.documentElement.clientHeight;
