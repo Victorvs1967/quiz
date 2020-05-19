@@ -8,13 +8,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/data/<file_name>', methods=['POST', 'GET'])
-def questions(file_name):
+@app.route('/', defaults={'u_path': 'data'})
+@app.route('/<path:u_path>', methods=['POST', 'GET'])
+def questions(u_path):
 
-    with app.open_resource(f'data/{file_name}', 'rb') as file:
+    with app.open_resource(u_path, 'rb') as file:
         data = file.read()
 
-    return Response(data, mimetype='application/json', headers={'Content-Disposition':f'attachment;filename={file_name}'})
+    return Response(data, mimetype='application/json', headers={'Content-Disposition':f'attachment;filename={u_path}'})
 
 
 if __name__ == "__main__":

@@ -15,17 +15,35 @@ document.addEventListener('DOMContentLoaded', () => {
         sendBtn = document.getElementById('send'),
         modalDialog = document.querySelector('.modal-dialog');
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyA8GB9IeEk9O8yzyw9dQk0N6kmmlMl5FJk",
+        authDomain: "quiz-burger-bdaa3.firebaseapp.com",
+        databaseURL: "https://quiz-burger-bdaa3.firebaseio.com",
+        projectId: "quiz-burger-bdaa3",
+        storageBucket: "quiz-burger-bdaa3.appspot.com",
+        messagingSenderId: "580505135198",
+        appId: "1:580505135198:web:8c34529c7500476eaaaccf",
+        measurementId: "G-XDXQM13PXW"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        firebase.database().ref().child('questions').once('value')
+        .then(snap => console.log('snap.val(): ', snap.val()));
+        
+
     // получение данных
     const getData = () => {
         formAnswers.textContent = 'LOAD...';
         setTimeout(() => {
-            fetch('./data/questions.json')
-            .then(res => res.json())
-            .then(obj => playTest(obj.questions))
-            .catch(err => {
-                formAnswers.textContent = 'Щшибка загрузки данных';
-                console.error(err);
-            })               
+
+            // fetch('./data/questions.json')
+            // .then(res => res.json())
+            // .then(obj => playTest(obj.questions))
+            // .catch(err => {
+            //     formAnswers.textContent = 'Ошибка загрузки данных';
+            //     console.error(err);
+            // })               
         }, 1000);    
 
     };
