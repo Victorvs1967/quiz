@@ -1,6 +1,6 @@
-/__pycache__
-/.vscode
-/venv
-/temp
+__pycache__/
+.vscode/
+venv/
+temp/
 
 .DS_Store
