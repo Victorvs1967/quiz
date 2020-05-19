@@ -26,17 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
         measurementId: "G-XDXQM13PXW"
         };
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        
-        firebase.database().ref().child('questions').once('value')
-        .then(snap => console.log('snap.val(): ', snap.val()));
-        
+        firebase.initializeApp(firebaseConfig);        
 
     // получение данных
     const getData = () => {
         formAnswers.textContent = 'LOAD...';
         setTimeout(() => {
-
+            firebase.database().ref().child('questions').once('value')
+            .then(snap => playTest(snap.val()));
+        
             // fetch('./data/questions.json')
             // .then(res => res.json())
             // .then(obj => playTest(obj.questions))
