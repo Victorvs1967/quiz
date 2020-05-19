@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formAnswers.appendChild(answerItem);
             });
         };
+
         // Рендер модального окна и вопросов
         const renderQuestion = (indexNumber) => {
             formAnswers.innerHTML = '';
@@ -174,6 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     newObj[key] = obj[key];
                     finalAnswers.push(newObj);
                 }
+                firebase.database().ref().child('results').push({
+                    answers: finalAnswers
+                });
+
 
                 setTimeout(() => {
                     modalBlock.classList.remove('d-block');
